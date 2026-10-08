@@ -1,0 +1,66 @@
+{% extends "shop/store_base.html" %}
+{% from "shop/_macros.html" import product_grid %}
+{% block title %}{{ item.name }} — Birchwood{% endblock %}
+{% block shop %}
+  <nav class="breadcrumb">
+    <a href="{{ url_for('shop.index') }}">Home</a> /
+    <a href="{{ url_for('shop.index', category=item.category|lower) }}">{{ item.category }}</a> /
+    {{ item.name }}
+  </nav>
+
+  <div class="product">
+    <div class="product__img">{{ item.emoji }}</div>
+    <div class="product__info">
+      <span class="pcard__cat">{{ item.category }}</span>
+      <h1>{{ item.name }}</h1>
+      <div class="product__rating">{{ item.rating|stars }} <span class="muted">{{ item.rating }} / 5 · {{ reviews|length }} reviews</span></div>
+      <p class="product__desc">{{ item.description }}</p>
+      <div class="product__price">{{ item.price|money }}</div>
+      <div class="product__stock">
+        {% if item.stock > 0 %}
+          <span class="in-stock">● In stock</span> · {{ item.stock }} available
+        {% else %}
+          <span class="out-stock">● Out of stock</span>
+        {% endif %}
+      </div>
+      <form class="addcart" method="post" action="{{ url_for('shop.cart_add') }}">
+        <input type="hidden" name="product_id" value="{{ item.id }}">
+        <input type="number" name="qty" value="1" min="1" max="{{ item.stock or 1 }}" aria-label="Quantity">
+        <button class="btn btn--lg" type="submit" {{ 'disabled' if item.stock == 0 }}>Add to cart</button>
+      </form>
+    </div>
+  </div>
+
+  <div class="cols2">
+    <section class="panel">
+      <h2>Specifications</h2>
+      <table class="spectable">
+        {% for k, v in specs %}<tr><th>{{ k }}</th><td>{{ v }}</td></tr>{% endfor %}
+      </table>
+    </section>
+
+    <section class="panel">
+      <h2>Customer reviews</h2>
+      {% if reviews %}
+        {% for r in reviews %}
+          <div class="review">
+            <div class="review__head">
+              <strong>{{ r.author }}</strong>
+              <span class="review__stars">{{ r.rating|stars }}</span>
+            </div>
+            <p>{{ r.body }}</p>
+          </div>
+        {% endfor %}
+      {% else %}
+        <p class="muted">No reviews yet.</p>
+      {% endif %}
+    </section>
+  </div>
+
+  {% if related %}
+    <section class="section">
+      <div class="section__head"><h2>You might also like</h2></div>
+      {{ product_grid(related) }}
+    </section>
+  {% endif %}
+{% endblock %}

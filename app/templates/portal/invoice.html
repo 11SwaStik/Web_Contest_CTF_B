@@ -1,0 +1,26 @@
+{% extends "portal/portal_base.html" %}
+{% block title %}{{ invoice.number }} — Fieldnote{% endblock %}
+{% block heading %}Invoice {{ invoice.number }}{% endblock %}
+{% block portal %}
+  <a class="link" href="{{ url_for('auth.billing') }}">← Back to billing</a>
+  <section class="mrd-card mrd-invoice">
+    <div class="mrd-invoice__head">
+      <div><h2>Fieldnote, Inc.</h2><p class="muted">billing@fieldnote.example</p></div>
+      <div class="mrd-invoice__meta">
+        <div><span class="muted">Invoice</span><strong>{{ invoice.number }}</strong></div>
+        <div><span class="muted">Date</span><strong>{{ invoice.date }}</strong></div>
+        <div><span class="muted">Status</span>
+          <span class="mrd-badge mrd-badge--{{ 'ok' if invoice.status=='Paid' else 'due' }}">{{ invoice.status }}</span></div>
+      </div>
+    </div>
+    <table class="mrd-table">
+      <thead><tr><th>Description</th><th>Amount</th></tr></thead>
+      <tbody>
+        <tr><td>{{ user.plan|default('Subscription') }} plan — monthly</td><td>{{ invoice.amount|money }}</td></tr>
+      </tbody>
+    </table>
+    <div class="mrd-invoice__total"><span>Total</span><strong>{{ invoice.amount|money }}</strong></div>
+    <a class="mrd-btn" href="{{ url_for('auth.invoice_download', number=invoice.number) }}">Download receipt</a>
+    <p class="muted" style="margin-top:8px">Demo environment — no real charge.</p>
+  </section>
+{% endblock %}

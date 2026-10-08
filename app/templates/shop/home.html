@@ -1,0 +1,34 @@
+{% extends "shop/store_base.html" %}
+{% from "shop/_macros.html" import product_grid %}
+{% block title %}Birchwood — Plants, kitchenware & handmade goods{% endblock %}
+{% block shop %}
+  <section class="hero">
+    <div class="hero__text">
+      <h1>Bring the outside in.</h1>
+      <p>Living plants, hand-thrown kitchenware and natural-fibre textiles — grown and made slowly.</p>
+      <a class="btn" href="{{ url_for('shop.index', category='plants') }}">Shop plants</a>
+    </div>
+    <div class="hero__art" aria-hidden="true">🌿🪴🕯️</div>
+  </section>
+
+  <section class="promo">🌱 Free shipping on orders over $75 · 30-day returns</section>
+
+  <section class="section">
+    <div class="section__head">
+      <h2>Loved by the community</h2>
+      <a class="link" href="{{ url_for('shop.index', category='plants') }}">Browse all</a>
+    </div>
+    {{ product_grid(featured) }}
+  </section>
+
+  <section class="newsletter">
+    <div>
+      <h2>Get 10% off your first order</h2>
+      <p class="muted">Seasonal arrivals and plant care tips. No spam.</p>
+    </div>
+    <form class="newsletter__form" method="post" action="{{ url_for('shop.newsletter') }}">
+      <input type="email" name="email" placeholder="you@example.com" aria-label="Email" required>
+      <button class="btn" type="submit">Subscribe</button>
+    </form>
+  </section>
+{% endblock %}

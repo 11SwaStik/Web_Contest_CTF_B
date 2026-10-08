@@ -1,0 +1,15 @@
+# Keep the student-facing image clean and safe.
+instructor/          # answer keys + flags — must NOT ship to students
+tests/
+*.md
+.git/
+.venv/
+venv/
+__pycache__/
+*.pyc
+*.db
+**/*.db
+app/contest.db
+.DS_Store
+.vscode/
+.idea/

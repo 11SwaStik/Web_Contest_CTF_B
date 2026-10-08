@@ -1,0 +1,48 @@
+{% extends "base.html" %}
+{% from "_icons.html" import icon %}
+{% block title %}Tidepool — The data API for modern teams{% endblock %}
+{% block body %}
+<div class="db">
+  <header class="db-nav">
+    <a class="db-logo" href="{{ url_for('api.landing') }}">🌊 Tidepool</a>
+    <nav>
+      <a href="{{ url_for('api.docs') }}">Docs</a>
+      <a href="{{ url_for('api.docs') }}#reference">Reference</a>
+      <a href="{{ url_for('api.dashboard') }}">Dashboard</a>
+    </nav>
+  </header>
+
+  <section class="db-hero">
+    <span class="db-pill">Weather &amp; environmental data</span>
+    <h1>Live ocean &amp; weather data,<br>one clean API.</h1>
+    <p>Tide heights, buoy readings and forecasts for every coastline —
+       sync it into your stack with one REST API. Ship in minutes, not weeks.</p>
+    <div class="db-hero__cta">
+      <a class="db-btn" href="{{ url_for('api.docs') }}">Read the docs</a>
+      <a class="db-btn db-btn--ghost" href="{{ url_for('api.docs') }}#reference">API reference</a>
+    </div>
+    <div class="db-hero__code">
+      <div class="db-code__bar"><span></span><span></span><span></span></div>
+      <pre class="db-code">$ curl https://api.tidepool.example/v1/accounts/me \
+    -H "Authorization: Bearer tp_live_sk_..."
+
+{
+  "id": 104,
+  "owner_name": "Coastal Metrics Co.",
+  "plan": "starter"
+}</pre>
+    </div>
+  </section>
+
+  <section class="db-features">
+    <div class="db-feature"><div class="db-feature__ic">{{ icon('cloud', 20) }}</div><h3>Global coverage</h3><p>Predictable resource URLs for every monitored coastline.</p></div>
+    <div class="db-feature"><div class="db-feature__ic">{{ icon('lock', 20) }}</div><h3>Token auth</h3><p>Scoped bearer tokens with per-account access.</p></div>
+    <div class="db-feature"><div class="db-feature__ic">{{ icon('droplet', 20) }}</div><h3>Real-time readings</h3><p>Track usage and live station data in real time.</p></div>
+  </section>
+
+  <footer class="db-foot">
+    <span>© 2026 Tidepool</span>
+    <a href="/">Scaler Security Lab</a>
+  </footer>
+</div>
+{% endblock %}

@@ -1,0 +1,32 @@
+{% extends "portal/portal_base.html" %}
+{% block title %}Team — Fieldnote{% endblock %}
+{% block heading %}Team{% endblock %}
+{% block portal %}
+  <section class="mrd-card">
+    <div class="mrd-card__head">
+      <h2>{{ user.company }} · Members</h2>
+      <details class="mrd-disclose">
+        <summary class="mrd-btn">Invite member</summary>
+        <form class="mrd-form" method="post" action="{{ url_for('auth.team_invite') }}">
+          <label>Name<input type="text" name="name" required></label>
+          <label>Email<input type="email" name="email" required></label>
+          <button class="mrd-btn" type="submit">Send invite</button>
+        </form>
+      </details>
+    </div>
+    <table class="mrd-table">
+      <thead><tr><th>Name</th><th>Email</th><th>Role</th></tr></thead>
+      <tbody>
+        {% for m in members %}
+          <tr>
+            <td><div class="mrd-member"><span class="mrd-avatar mrd-avatar--sm">{{ m.name[0]|upper }}</span>{{ m.name }}</div></td>
+            <td class="muted">{{ m.email }}</td>
+            <td><span class="mrd-badge">{{ m.role }}</span></td>
+          </tr>
+        {% else %}
+          <tr><td colspan="3" class="muted">No team members.</td></tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </section>
+{% endblock %}

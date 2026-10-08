@@ -1,0 +1,10 @@
+{% extends "base.html" %}
+{% block title %}{{ title }}{% endblock %}
+{% block body %}
+  <div class="status-page">
+    <span class="tag">{{ topic }}</span>
+    <h1>{{ title }}</h1>
+    <p>This challenge is being built. Check back soon.</p>
+    <a class="btn" href="/">← Back to contest</a>
+  </div>
+{% endblock %}

@@ -1,0 +1,59 @@
+{% extends "portal/portal_base.html" %}
+{% block title %}Billing — Fieldnote{% endblock %}
+{% block heading %}Billing{% endblock %}
+{% block portal %}
+  <div class="mrd-grid2">
+    <section class="mrd-card">
+      <div class="mrd-card__head"><h2>Current plan</h2></div>
+      <div class="mrd-planbox">
+        <div><span class="mrd-planbox__name">{{ user.plan }}</span><p class="muted">$149 billed monthly · renews Oct 1, 2026</p></div>
+      </div>
+      <details class="mrd-disclose">
+        <summary class="mrd-btn mrd-btn--ghost">Change plan</summary>
+        <form class="mrd-form" method="post" action="{{ url_for('auth.change_plan') }}">
+          <label>Select a plan
+            <select name="plan">
+              <option {{ 'selected' if user.plan=='Starter' }}>Starter</option>
+              <option {{ 'selected' if user.plan=='Pro' }}>Pro</option>
+              <option {{ 'selected' if user.plan=='Enterprise' }}>Enterprise</option>
+            </select>
+          </label>
+          <button class="mrd-btn" type="submit">Save plan</button>
+        </form>
+      </details>
+    </section>
+    <section class="mrd-card">
+      <div class="mrd-card__head"><h2>Payment method</h2></div>
+      <div class="mrd-pay"><span class="mrd-pay__brand">VISA</span> •••• •••• •••• 4242 <span class="muted">exp 08/28</span></div>
+      <details class="mrd-disclose">
+        <summary class="mrd-btn mrd-btn--ghost">Update card</summary>
+        <form class="mrd-form" method="post" action="{{ url_for('auth.update_card') }}">
+          <label>Card number<input type="text" name="number" placeholder="4242 4242 4242 4242" required></label>
+          <label>Expiry<input type="text" name="expiry" placeholder="MM/YY"></label>
+          <button class="mrd-btn" type="submit">Save card</button>
+          <p class="muted">Demo — no real card is stored or charged.</p>
+        </form>
+      </details>
+    </section>
+  </div>
+
+  <section class="mrd-card">
+    <div class="mrd-card__head"><h2>Invoices</h2></div>
+    <table class="mrd-table">
+      <thead><tr><th>Invoice</th><th>Date</th><th>Amount</th><th>Status</th><th></th></tr></thead>
+      <tbody>
+        {% for inv in invoices %}
+          <tr>
+            <td>{{ inv.number }}</td>
+            <td>{{ inv.date }}</td>
+            <td>{{ inv.amount|money }}</td>
+            <td><span class="mrd-badge mrd-badge--{{ 'ok' if inv.status=='Paid' else 'due' }}">{{ inv.status }}</span></td>
+            <td><a class="link" href="{{ url_for('auth.invoice', number=inv.number) }}">View</a></td>
+          </tr>
+        {% else %}
+          <tr><td colspan="5" class="muted">No invoices yet.</td></tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </section>
+{% endblock %}

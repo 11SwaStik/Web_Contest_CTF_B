@@ -1,0 +1,35 @@
+{% extends "portal/portal_base.html" %}
+{% block title %}Settings — Fieldnote{% endblock %}
+{% block heading %}Settings{% endblock %}
+{% block portal %}
+  <div class="mrd-grid2">
+    <section class="mrd-card">
+      <div class="mrd-card__head"><h2>Profile</h2></div>
+      <form class="mrd-form" method="post" action="{{ url_for('auth.settings_profile') }}">
+        <label>Full name<input type="text" name="full_name" value="{{ user.full_name|default('') }}" required></label>
+        <label>Email<input type="email" name="email" value="{{ user.email|default('') }}" required></label>
+        <label>Username<input type="text" value="{{ user.username|default('') }}" disabled></label>
+        <button class="mrd-btn" type="submit">Save profile</button>
+      </form>
+    </section>
+
+    <section class="mrd-card">
+      <div class="mrd-card__head"><h2>Change password</h2></div>
+      <form class="mrd-form" method="post" action="{{ url_for('auth.settings_password') }}">
+        <label>Current password<input type="password" name="current" required></label>
+        <label>New password<input type="password" name="new" required></label>
+        <button class="mrd-btn" type="submit">Update password</button>
+      </form>
+    </section>
+  </div>
+
+  <section class="mrd-card">
+    <div class="mrd-card__head"><h2>Notifications</h2></div>
+    <form class="mrd-form" method="post" action="{{ url_for('auth.settings_notifications') }}" style="max-width:none">
+      <label class="mrd-toggle"><input type="checkbox" name="product" checked> Product updates and newsletters</label>
+      <label class="mrd-toggle"><input type="checkbox" name="billing" checked> Billing and invoice emails</label>
+      <label class="mrd-toggle"><input type="checkbox" name="usage"> Weekly usage summary</label>
+      <button class="mrd-btn" type="submit">Save preferences</button>
+    </form>
+  </section>
+{% endblock %}

@@ -1,0 +1,48 @@
+{% extends "portal/portal_base.html" %}
+{% from "_icons.html" import icon %}
+{% block title %}Dashboard — Fieldnote{% endblock %}
+{% block heading %}Dashboard{% endblock %}
+{% block portal %}
+  <p class="mrd-welcome">Welcome back, {{ user.full_name.split(' ')[0] }}. Here's your account at a glance.</p>
+
+  <div class="mrd-stats">
+    <div class="mrd-stat"><span class="mrd-stat__ic">{{ icon('billing', 18) }}</span><span class="mrd-stat__label">Current plan</span><span class="mrd-stat__value">{{ user.plan }}</span></div>
+    <div class="mrd-stat"><span class="mrd-stat__ic">{{ icon('chart', 18) }}</span><span class="mrd-stat__label">Open invoices</span><span class="mrd-stat__value">{{ invoices | selectattr('status','equalto','Due') | list | length }}</span></div>
+    <div class="mrd-stat"><span class="mrd-stat__ic">{{ icon('team', 18) }}</span><span class="mrd-stat__label">Company</span><span class="mrd-stat__value">{{ user.company }}</span></div>
+    <div class="mrd-stat"><span class="mrd-stat__ic">{{ icon('admin', 18) }}</span><span class="mrd-stat__label">Role</span><span class="mrd-stat__value">{{ session.role|capitalize }}</span></div>
+  </div>
+
+  <div class="mrd-grid2">
+    <section class="mrd-card">
+      <div class="mrd-card__head"><h2>API usage</h2><span class="muted">September</span></div>
+      <div class="mrd-meter"><div class="mrd-meter__fill" style="width:68%"></div></div>
+      <p class="muted">68,420 of 100,000 requests used (68%).</p>
+      <div class="mrd-usage-legend">
+        <span><b>68,420</b><small>Used</small></span>
+        <span><b>31,580</b><small>Remaining</small></span>
+        <span><b>Oct 1</b><small>Resets</small></span>
+      </div>
+    </section>
+
+    <section class="mrd-card">
+      <div class="mrd-card__head"><h2>Recent activity</h2></div>
+      <ul class="mrd-activity">
+        {% for a in activity %}
+          <li><span class="mrd-activity__when">{{ a.when_at }}</span>{{ a.text }}</li>
+        {% else %}
+          <li class="muted">No recent activity.</li>
+        {% endfor %}
+      </ul>
+    </section>
+  </div>
+
+  <section class="mrd-card">
+    <div class="mrd-card__head"><h2>Quick actions</h2></div>
+    <div class="mrd-actions">
+      <a href="{{ url_for('auth.billing') }}">{{ icon('billing', 18) }} View invoices</a>
+      <a href="{{ url_for('auth.team') }}">{{ icon('team', 18) }} Manage team</a>
+      <a href="{{ url_for('auth.settings') }}">{{ icon('settings', 18) }} Account settings</a>
+      <a href="{{ url_for('auth.support') }}">{{ icon('support', 18) }} Get support</a>
+    </div>
+  </section>
+{% endblock %}

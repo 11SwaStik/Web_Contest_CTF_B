@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+{% block title %}Security Contest{% endblock %}
+{% block body %}
+  <div class="hub">
+    <header class="hub__head">
+      <h1>Web Security Contest</h1>
+      <p>Three independent challenges. Solve each and submit its flag.</p>
+    </header>
+    <div class="hub__cards">
+      {% for c in challenges %}
+        <a class="hub__card" href="{{ c.url }}">
+          <span class="tag">{{ c.topic }}</span>
+          <h2>{{ c.title }}</h2>
+          <p>{{ c.blurb }}</p>
+        </a>
+      {% endfor %}
+    </div>
+  </div>
+{% endblock %}

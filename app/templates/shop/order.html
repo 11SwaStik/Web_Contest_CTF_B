@@ -1,0 +1,28 @@
+{% extends "shop/store_base.html" %}
+{% block title %}Order confirmed — Birchwood{% endblock %}
+{% block shop %}
+  <div class="order-confirm">
+    <div class="order-confirm__mark">✅</div>
+    <h1>Thank you, {{ order.full_name.split(' ')[0] }}!</h1>
+    <p class="muted">Your order <strong>{{ order.order_number }}</strong> is confirmed.
+       A receipt was sent to {{ order.email }}.</p>
+  </div>
+
+  <div class="panel">
+    <h2>Order summary</h2>
+    {% for it in items %}
+      <div class="summary-line">
+        <span>{{ it.qty }} × {{ it.name }}</span>
+        <span>{{ (it.price * it.qty)|money }}</span>
+      </div>
+    {% endfor %}
+    <div class="summary-total"><span>Total</span><strong>{{ order.subtotal|money }}</strong></div>
+  </div>
+
+  <div class="panel">
+    <h2>Shipping to</h2>
+    <p>{{ order.full_name }}<br>{{ order.address }}<br>{{ order.city }}, {{ order.postcode }}</p>
+  </div>
+
+  <a class="btn" href="{{ url_for('shop.index') }}">Continue shopping</a>
+{% endblock %}

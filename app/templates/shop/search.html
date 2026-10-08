@@ -1,0 +1,31 @@
+{% extends "shop/store_base.html" %}
+{% from "shop/_macros.html" import product_grid, sort_select, pagination %}
+{% block title %}Search — Birchwood{% endblock %}
+{% block shop %}
+  <nav class="breadcrumb"><a href="{{ url_for('shop.index') }}">Home</a> / Search</nav>
+  <h1 class="page-title">Search results for “{{ q }}”</h1>
+
+  {% if error %}
+    <div class="alert alert--error">
+      <strong>Something went wrong with your search.</strong>
+      <pre>{{ error }}</pre>
+    </div>
+  {% endif %}
+
+  {% if results is not none %}
+    <div class="toolbar">
+      <span class="muted">{{ total }} result(s)</span>
+      {{ sort_select(sorts, sort) }}
+    </div>
+    {% if results|length %}
+      {{ product_grid(results) }}
+      {{ pagination(page, pages) }}
+    {% else %}
+      <div class="empty">
+        <div class="empty__mark">🔍</div>
+        <p>No products match “{{ q }}”.</p>
+        <a class="btn" href="{{ url_for('shop.index') }}">Back to store</a>
+      </div>
+    {% endif %}
+  {% endif %}
+{% endblock %}

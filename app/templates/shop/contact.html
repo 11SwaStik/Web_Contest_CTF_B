@@ -1,0 +1,20 @@
+{% extends "shop/store_base.html" %}
+{% block title %}Contact — Birchwood{% endblock %}
+{% block shop %}
+  <nav class="breadcrumb"><a href="{{ url_for('shop.index') }}">Home</a> / Contact</nav>
+  <h1 class="page-title">Contact us</h1>
+  <div class="cols2">
+    <form class="checkout__form" method="post" action="{{ url_for('shop.contact') }}">
+      <label>Name<input type="text" name="name" required></label>
+      <label>Email<input type="email" name="email" required></label>
+      <label>Message<textarea name="message" rows="5" required></textarea></label>
+      <button class="btn btn--lg" type="submit">Send message</button>
+    </form>
+    <div class="prose">
+      <h2>Get in touch</h2>
+      <p>Support: <span class="muted">support@birchwood.example</span></p>
+      <p>Hours: Mon–Fri, 9am–6pm.</p>
+      <p>We usually reply within one business day.</p>
+    </div>
+  </div>
+{% endblock %}

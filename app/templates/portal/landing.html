@@ -1,0 +1,53 @@
+{% extends "base.html" %}
+{% from "_icons.html" import icon %}
+{% block title %}Fieldnote — Customer accounts, billing & usage in one portal{% endblock %}
+{% block body %}
+<div class="mland">
+  <header class="mland-nav">
+    <a class="mland-logo" href="{{ url_for('auth.index') }}"><span>◆</span> Fieldnote</a>
+    <nav>
+      <a href="#features">Features</a>
+      <a href="#pricing">Pricing</a>
+      {% if session %}
+        <a class="mland-btn" href="{{ url_for('auth.dashboard') }}">Go to dashboard</a>
+      {% else %}
+        <a class="mland-btn" href="{{ url_for('auth.login') }}">Sign in</a>
+      {% endif %}
+    </nav>
+  </header>
+
+  <section class="mland-hero">
+    <span class="mland-eyebrow">Customer portal platform</span>
+    <h1>Every customer account,<br>billing and usage — in one place.</h1>
+    <p>Fieldnote gives your customers a single, secure portal to manage their
+       subscription, download invoices, and see real-time usage. Less support
+       load, happier customers.</p>
+    <div class="mland-cta">
+      <a class="mland-btn mland-btn--lg" href="{{ url_for('auth.login') }}">Sign in to your account</a>
+      <a class="mland-btn mland-btn--ghost mland-btn--lg" href="#features">See features</a>
+    </div>
+    <p class="mland-note">Trusted by teams at Brightline, Lumen, and 400+ companies.</p>
+  </section>
+
+  <section class="mland-features" id="features">
+    <div class="mland-feature"><div class="mland-feature__ic">{{ icon('billing', 22) }}</div><h3>Billing &amp; invoices</h3><p>Self-serve invoices, plan changes and payment methods.</p></div>
+    <div class="mland-feature"><div class="mland-feature__ic">{{ icon('chart', 22) }}</div><h3>Usage insights</h3><p>Real-time metering so customers always know where they stand.</p></div>
+    <div class="mland-feature"><div class="mland-feature__ic">{{ icon('team', 22) }}</div><h3>Team management</h3><p>Invite teammates and manage roles with granular control.</p></div>
+    <div class="mland-feature"><div class="mland-feature__ic">{{ icon('lock', 22) }}</div><h3>Secure by design</h3><p>SSO-ready sessions and audited access for peace of mind.</p></div>
+  </section>
+
+  <section class="mland-pricing" id="pricing">
+    <h2>Simple, transparent pricing</h2>
+    <div class="mland-plans">
+      <div class="mland-plan"><h3>Starter</h3><div class="mland-price">$49<span>/mo</span></div><ul><li>1 seat</li><li>Basic usage</li><li>Email support</li></ul><a class="mland-btn mland-btn--ghost" href="{{ url_for('auth.login') }}">Choose Starter</a></div>
+      <div class="mland-plan mland-plan--pop"><span class="mland-tag">Popular</span><h3>Pro</h3><div class="mland-price">$149<span>/mo</span></div><ul><li>10 seats</li><li>Full usage insights</li><li>Priority support</li></ul><a class="mland-btn" href="{{ url_for('auth.login') }}">Choose Pro</a></div>
+      <div class="mland-plan"><h3>Enterprise</h3><div class="mland-price">Custom</div><ul><li>Unlimited seats</li><li>SSO & audit logs</li><li>Dedicated manager</li></ul><a class="mland-btn mland-btn--ghost" href="{{ url_for('auth.login') }}">Contact sales</a></div>
+    </div>
+  </section>
+
+  <footer class="mland-foot">
+    <span>© 2026 Fieldnote</span>
+    <a href="/">Scaler Security Lab</a>
+  </footer>
+</div>
+{% endblock %}

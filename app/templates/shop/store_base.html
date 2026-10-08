@@ -1,0 +1,75 @@
+{% extends "base.html" %}
+{% block body %}
+<div class="birchwood">
+<header class="shop-header">
+  <div class="shop-header__top">
+    <span class="shop-header__note">Free shipping over $75 · Hand-packed with care</span>
+    <nav class="shop-nav">
+      <a href="{{ url_for('shop.about') }}">Our story</a>
+      <a href="{{ url_for('shop.contact') }}">Contact</a>
+    </nav>
+  </div>
+  <div class="shop-header__bar">
+    <a class="shop-brand" href="{{ url_for('shop.index') }}">
+      <span class="shop-brand__mark">🌿</span> Birchwood
+    </a>
+
+    <!-- eng: search still filters unlisted/hidden rows client-side-ish, revisit before GA -->
+    <form class="shop-search" method="get" action="{{ url_for('shop.index') }}" role="search">
+      <input type="text" name="q" value="{{ q|default('', true) }}"
+             placeholder="Search plants, kitchenware…" aria-label="Search products">
+      <button type="submit" aria-label="Search">Search</button>
+    </form>
+
+    <a class="shop-cart" href="{{ url_for('shop.cart') }}" aria-label="Cart">
+      Bag <span class="badge">{{ cart_count }}</span>
+    </a>
+  </div>
+
+  <div class="shop-catnav">
+    <a href="{{ url_for('shop.index') }}" class="{{ 'active' if not active }}">All</a>
+    {% for c in categories %}
+      <a href="{{ url_for('shop.index', category=c.slug) }}"
+         class="{{ 'active' if active == c.slug else '' }}">{{ c.name }}</a>
+    {% endfor %}
+  </div>
+</header>
+
+{% with messages = get_flashed_messages(with_categories=true) %}
+  {% if messages %}
+    <div class="flash-wrap">
+      {% for category, msg in messages %}
+        <div class="flash flash--{{ category }}">{{ msg }}</div>
+      {% endfor %}
+    </div>
+  {% endif %}
+{% endwith %}
+
+<main class="shop-main">
+  {% block shop %}{% endblock %}
+</main>
+
+<footer class="shop-footer">
+  <div class="shop-footer__cols">
+    <div class="shop-footer__brand">
+      <h4>🌿 Birchwood</h4>
+      <p>Plants and handmade goods, grown and made slowly.</p>
+    </div>
+    <div>
+      <h4>Shop</h4>
+      {% for c in categories %}
+        <a href="{{ url_for('shop.index', category=c.slug) }}">{{ c.name }}</a>
+      {% endfor %}
+    </div>
+    <div>
+      <h4>Help</h4>
+      <a href="{{ url_for('shop.about') }}">About us</a>
+      <a href="{{ url_for('shop.shipping') }}">Shipping</a>
+      <a href="{{ url_for('shop.returns') }}">Returns</a>
+      <a href="{{ url_for('shop.contact') }}">Contact</a>
+    </div>
+  </div>
+  <div class="shop-footer__legal">© 2026 Birchwood, Inc. · Demo environment</div>
+</footer>
+</div>
+{% endblock %}

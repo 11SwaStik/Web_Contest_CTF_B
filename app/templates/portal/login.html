@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+{% block title %}Sign in — Fieldnote{% endblock %}
+{% block body %}
+<div class="mrd-login">
+  <div class="mrd-login__card">
+    <div class="mrd-login__brand"><span>◆</span> Fieldnote</div>
+    <h1>Sign in to your account</h1>
+
+    {% if error %}<div class="flash flash--error">{{ error }}</div>{% endif %}
+    {% with messages = get_flashed_messages(with_categories=true) %}
+      {% for category, msg in messages %}
+        <div class="flash flash--{{ category }}">{{ msg }}</div>
+      {% endfor %}
+    {% endwith %}
+
+    <form class="mrd-form" method="post" action="{{ url_for('auth.login') }}">
+      <label>Username<input type="text" name="username" autocomplete="username" autofocus required></label>
+      <label>Password<input type="password" name="password" autocomplete="current-password" required></label>
+      <button class="mrd-btn" type="submit" style="align-self:stretch;text-align:center">Sign in</button>
+    </form>
+
+    <p class="mrd-login__hint"><a href="{{ url_for('auth.forgot') }}">Forgot your password?</a></p>
+    <p class="mrd-login__hint">Members only · <a href="{{ url_for('auth.index') }}">Back to home</a></p>
+  </div>
+</div>
+{% endblock %}

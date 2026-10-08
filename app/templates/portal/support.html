@@ -1,0 +1,19 @@
+{% extends "portal/portal_base.html" %}
+{% block title %}Support — Fieldnote{% endblock %}
+{% block heading %}Support{% endblock %}
+{% block portal %}
+  <section class="mrd-card">
+    <div class="mrd-card__head"><h2>Frequently asked questions</h2></div>
+    <div class="mrd-faq">
+      <details><summary>How do I change my plan?</summary><p>Go to Billing → Change plan. Upgrades apply immediately; downgrades at the next cycle.</p></details>
+      <details><summary>Where can I find my invoices?</summary><p>All invoices are under Billing. Click any invoice to view or download it.</p></details>
+      <details><summary>How do I invite a teammate?</summary><p>Open Team → Invite member and enter their email. They'll receive an invitation.</p></details>
+      <details><summary>How do I reset my password?</summary><p>Go to Settings → Change password. You'll need your current password.</p></details>
+      <details><summary>What if I forget my password?</summary><p>Use the <a href="{{ url_for('auth.forgot') }}">Forgot your password?</a> link on the sign-in page. Enter your username and we'll send a reset link to the email on file (in this demo environment, the link is shown directly on the page instead of emailed).</p></details>
+    </div>
+  </section>
+  <section class="mrd-card">
+    <div class="mrd-card__head"><h2>Still need help?</h2></div>
+    <p class="muted">Email <strong>support@fieldnote.example</strong> — we reply within one business day.</p>
+  </section>
+{% endblock %}

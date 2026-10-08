@@ -1,0 +1,43 @@
+{% extends "shop/store_base.html" %}
+{% block title %}Cart — Birchwood{% endblock %}
+{% block shop %}
+  <nav class="breadcrumb"><a href="{{ url_for('shop.index') }}">Home</a> / Cart</nav>
+  <h1 class="page-title">Your cart</h1>
+
+  {% if items %}
+    <div class="carttable">
+      {% for it in items %}
+        <div class="cartrow">
+          <div class="cartrow__img">{{ it.emoji }}</div>
+          <div class="cartrow__main">
+            <a class="cartrow__name" href="{{ url_for('shop.product', pid=it.id) }}">{{ it.name }}</a>
+            <span class="muted">{{ it.price|money }} each</span>
+          </div>
+          <form class="cartrow__qty" method="post" action="{{ url_for('shop.cart_update') }}">
+            <input type="hidden" name="product_id" value="{{ it.id }}">
+            <input type="number" name="qty" value="{{ it.qty }}" min="0" aria-label="Quantity">
+            <button class="btn btn--sm" type="submit">Update</button>
+          </form>
+          <div class="cartrow__line">{{ it.line|money }}</div>
+          <form method="post" action="{{ url_for('shop.cart_remove') }}">
+            <input type="hidden" name="product_id" value="{{ it.id }}">
+            <button class="iconbtn" type="submit" aria-label="Remove">✕</button>
+          </form>
+        </div>
+      {% endfor %}
+    </div>
+
+    <div class="cart-summary">
+      <div class="cart-summary__line"><span>Subtotal</span><strong>{{ subtotal|money }}</strong></div>
+      <p class="muted">Shipping & taxes calculated at checkout.</p>
+      <a class="btn btn--lg" href="{{ url_for('shop.checkout') }}">Proceed to checkout</a>
+      <a class="link" href="{{ url_for('shop.index') }}">Continue shopping</a>
+    </div>
+  {% else %}
+    <div class="empty">
+      <div class="empty__mark">🛒</div>
+      <p>Your cart is empty.</p>
+      <a class="btn" href="{{ url_for('shop.index') }}">Start shopping</a>
+    </div>
+  {% endif %}
+{% endblock %}

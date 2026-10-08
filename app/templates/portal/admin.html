@@ -1,0 +1,27 @@
+{% extends "portal/portal_base.html" %}
+{% block title %}Admin — Fieldnote{% endblock %}
+{% block heading %}Admin console{% endblock %}
+{% block portal %}
+  <div class="mrd-stats">
+    <div class="mrd-stat"><span class="mrd-stat__label">Total customers</span><span class="mrd-stat__value">412</span></div>
+    <div class="mrd-stat"><span class="mrd-stat__label">MRR</span><span class="mrd-stat__value">$61,388</span></div>
+    <div class="mrd-stat"><span class="mrd-stat__label">Open tickets</span><span class="mrd-stat__value">7</span></div>
+    <div class="mrd-stat"><span class="mrd-stat__label">Signed in as</span><span class="mrd-stat__value">{{ session.role }}</span></div>
+  </div>
+
+  <section class="mrd-card mrd-card--flag">
+    <div class="mrd-card__head"><h2>🎉 Administrator access granted</h2></div>
+    <p>You reached an admin-only console with an escalated session. Your flag:</p>
+    <pre class="flagbox">{{ flag }}</pre>
+  </section>
+
+  <section class="mrd-card">
+    <div class="mrd-card__head"><h2>System administration</h2></div>
+    <ul class="reslist">
+      <li>👥 Manage all customers</li>
+      <li>🧾 Global billing &amp; refunds</li>
+      <li>🗂 Audit log</li>
+      <li>⚙ Platform settings</li>
+    </ul>
+  </section>
+{% endblock %}

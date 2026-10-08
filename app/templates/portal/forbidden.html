@@ -1,0 +1,15 @@
+{% extends "portal/portal_base.html" %}
+{% block title %}Access denied — Fieldnote{% endblock %}
+{% block heading %}Admin console{% endblock %}
+{% block portal %}
+  <section class="mrd-card">
+    <div class="mrd-denied">
+      <div class="mrd-denied__mark">🔒</div>
+      <h2>Administrators only</h2>
+      <p class="muted">Your session role is “{{ role }}”. This console requires the
+        <strong>admin</strong> role. If you believe this is an error, contact your
+        account owner.</p>
+      <a class="mrd-btn" href="{{ url_for('auth.dashboard') }}">Back to dashboard</a>
+    </div>
+  </section>
+{% endblock %}

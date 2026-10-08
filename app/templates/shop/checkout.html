@@ -1,0 +1,35 @@
+{% extends "shop/store_base.html" %}
+{% block title %}Checkout — Birchwood{% endblock %}
+{% block shop %}
+  <nav class="breadcrumb">
+    <a href="{{ url_for('shop.index') }}">Home</a> /
+    <a href="{{ url_for('shop.cart') }}">Cart</a> / Checkout
+  </nav>
+  <h1 class="page-title">Checkout</h1>
+
+  <div class="checkout">
+    <form class="checkout__form" method="post" action="{{ url_for('shop.checkout') }}">
+      <h2>Shipping details</h2>
+      <label>Full name<input type="text" name="full_name" value="{{ form.full_name|default('') }}" required></label>
+      <label>Email<input type="email" name="email" value="{{ form.email|default('') }}" required></label>
+      <label>Address<input type="text" name="address" value="{{ form.address|default('') }}" required></label>
+      <div class="checkout__row">
+        <label>City<input type="text" name="city" value="{{ form.city|default('') }}" required></label>
+        <label>Postcode<input type="text" name="postcode" value="{{ form.postcode|default('') }}" required></label>
+      </div>
+      <p class="muted">This is a demo store — no payment is taken and no goods ship.</p>
+      <button class="btn btn--lg" type="submit">Place order</button>
+    </form>
+
+    <aside class="checkout__summary">
+      <h2>Order summary</h2>
+      {% for it in items %}
+        <div class="summary-line">
+          <span>{{ it.qty }} × {{ it.name }}</span>
+          <span>{{ it.line|money }}</span>
+        </div>
+      {% endfor %}
+      <div class="summary-total"><span>Total</span><strong>{{ subtotal|money }}</strong></div>
+    </aside>
+  </div>
+{% endblock %}

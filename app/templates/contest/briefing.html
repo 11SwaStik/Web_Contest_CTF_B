@@ -1,0 +1,45 @@
+{% extends "base.html" %}
+{% block title %}Scaler · Security Assessment{% endblock %}
+{% block body %}
+<div class="ops">
+  <header class="ops-bar">
+    <div class="ops-brand">SCALER<span>// security lab</span></div>
+    <div class="ops-status"><span class="ops-dot"></span> engagement live · 3 targets</div>
+  </header>
+
+  <main class="ops-main">
+    <section class="ops-hero">
+      <p class="ops-eyebrow">// rules of engagement</p>
+      <h1>Breach three apps.<br><span>Capture three flags.</span></h1>
+      <p class="ops-lede">Each target is a live application hiding a single weakness. Recon it, exploit it, submit the flag.</p>
+    </section>
+
+    <section class="ops-targets">
+      {% for t in targets %}
+        <a class="ops-target" href="{{ t.url }}" style="--accent: {{ t.accent }}">
+          <div class="ops-target__top">
+            <span class="ops-target__num">{{ "%02d"|format(loop.index) }}</span>
+            <span class="ops-target__status"><span class="ops-dot"></span> ready</span>
+          </div>
+          <span class="ops-target__kind">{{ t.kind }}</span>
+          <span class="ops-target__name">{{ t.name }}</span>
+          <span class="ops-target__desc">{{ t.desc }}</span>
+          <span class="ops-target__go">open target →</span>
+        </a>
+      {% endfor %}
+    </section>
+
+    <section class="ops-rules">
+      <span class="ops-rules__label">// ground rules</span>
+      <ul>
+        <li>One flag per target</li>
+        <li>Scope limited to these three</li>
+        <li>No automated scanners</li>
+        <li>Any order</li>
+      </ul>
+    </section>
+  </main>
+
+  <footer class="ops-foot">SCALER · AUTHORISED TRAINING USE ONLY</footer>
+</div>
+{% endblock %}

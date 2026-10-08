@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+{% block title %}Reset password — Fieldnote{% endblock %}
+{% block body %}
+<div class="mrd-login">
+  <div class="mrd-login__card">
+    <div class="mrd-login__brand"><span>◆</span> Fieldnote</div>
+    <h1>Reset your password</h1>
+
+    {% with messages = get_flashed_messages(with_categories=true) %}
+      {% for category, msg in messages %}
+        <div class="flash flash--{{ category }}">{{ msg }}</div>
+      {% endfor %}
+    {% endwith %}
+
+    <form class="mrd-form" method="post" action="{{ url_for('auth.forgot') }}">
+      <label>Username<input type="text" name="username" autocomplete="username" autofocus required></label>
+      <button class="mrd-btn" type="submit" style="align-self:stretch;text-align:center">Send reset link</button>
+    </form>
+
+    {% if reset_link %}
+      <div class="flash flash--success" style="margin-top:14px">
+        <strong>Demo environment:</strong> no email is actually sent. Here's
+        the link that would be emailed to you:<br>
+        <a href="{{ reset_link }}">{{ reset_link }}</a>
+      </div>
+    {% endif %}
+
+    <p class="mrd-login__hint"><a href="{{ url_for('auth.login') }}">Back to sign in</a></p>
+  </div>
+</div>
+{% endblock %}

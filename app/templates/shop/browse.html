@@ -1,0 +1,25 @@
+{% extends "shop/store_base.html" %}
+{% from "shop/_macros.html" import product_grid, sort_select, pagination %}
+{% block title %}{{ heading }} — Birchwood{% endblock %}
+{% block shop %}
+  <nav class="breadcrumb"><a href="{{ url_for('shop.index') }}">Home</a> / {{ heading }}</nav>
+  <h1 class="page-title">{{ heading }}</h1>
+
+  <div class="toolbar">
+    <span class="muted">{{ total }} product(s)</span>
+    <div class="toolbar__right">
+      <a class="chip {{ 'chip--on' if in_stock }}"
+         href="{{ url_for('shop.index', category=active, sort=sort, in_stock='' if in_stock else '1') }}">
+        {{ '✓ ' if in_stock }}In stock only
+      </a>
+      {{ sort_select(sorts, sort) }}
+    </div>
+  </div>
+
+  {% if products|length %}
+    {{ product_grid(products) }}
+    {{ pagination(page, pages) }}
+  {% else %}
+    <div class="empty"><p>No products match your filters.</p></div>
+  {% endif %}
+{% endblock %}

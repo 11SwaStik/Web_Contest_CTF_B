@@ -1,0 +1,16 @@
+{% extends "shop/store_base.html" %}
+{% block title %}About — Birchwood{% endblock %}
+{% block shop %}
+  <nav class="breadcrumb"><a href="{{ url_for('shop.index') }}">Home</a> / About</nav>
+  <h1 class="page-title">About Birchwood</h1>
+  <div class="prose">
+    <p>Birchwood is an independent home goods studio specialising in plants,
+       handmade kitchenware, lighting and textiles. Founded in 2019, we ship to
+       over 30 countries.</p>
+    <p>Our small team hand-picks every maker and plant nursery in the catalogue
+       and stands behind a 30-day return policy on all orders.</p>
+    <h2>Contact</h2>
+    <p>Support: <span class="muted">support@birchwood.example</span><br>
+       Hours: Mon–Fri, 9am–6pm.</p>
+  </div>
+{% endblock %}

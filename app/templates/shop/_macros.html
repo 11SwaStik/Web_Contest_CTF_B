@@ -1,0 +1,48 @@
+{% macro product_card(p) %}
+  <a class="pcard" href="{{ url_for('shop.product', pid=p.id) }}">
+    <div class="pcard__img">{{ p.emoji }}</div>
+    <div class="pcard__body">
+      <span class="pcard__cat">{{ p.category }}</span>
+      <h3 class="pcard__name">{{ p.name }}</h3>
+      <div class="pcard__meta">
+        <span class="pcard__price">{{ p.price|money }}</span>
+        <span class="pcard__rating" title="{{ p.rating }} / 5">{{ p.rating|stars }}</span>
+      </div>
+    </div>
+  </a>
+{% endmacro %}
+
+{% macro product_grid(items) %}
+  <div class="pgrid">
+    {% for p in items %}{{ product_card(p) }}{% endfor %}
+  </div>
+{% endmacro %}
+
+{% macro sort_select(sorts, current) %}
+  <form class="toolbar__sort" method="get">
+    {% for k, v in request.args.items() %}
+      {% if k not in ['sort', 'page'] %}<input type="hidden" name="{{ k }}" value="{{ v }}">{% endif %}
+    {% endfor %}
+    <label>Sort by
+      <select name="sort" onchange="this.form.submit()">
+        {% for key, label in sorts.items() %}
+          <option value="{{ key }}" {{ 'selected' if key == current }}>{{ label }}</option>
+        {% endfor %}
+      </select>
+    </label>
+  </form>
+{% endmacro %}
+
+{% macro pagination(page, pages) %}
+  {% if pages > 1 %}
+    <nav class="pager" aria-label="Pagination">
+      {% if page > 1 %}
+        <a class="pager__btn" href="{{ url_for(request.endpoint, **dict(request.args.to_dict(), page=page-1)) }}">← Prev</a>
+      {% else %}<span class="pager__btn pager__btn--off">← Prev</span>{% endif %}
+      <span class="pager__info">Page {{ page }} of {{ pages }}</span>
+      {% if page < pages %}
+        <a class="pager__btn" href="{{ url_for(request.endpoint, **dict(request.args.to_dict(), page=page+1)) }}">Next →</a>
+      {% else %}<span class="pager__btn pager__btn--off">Next →</span>{% endif %}
+    </nav>
+  {% endif %}
+{% endmacro %}

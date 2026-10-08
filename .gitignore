@@ -1,0 +1,23 @@
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.venv/
+venv/
+env/
+
+# SQLite database (seeded fresh on startup)
+*.db
+**/*.db
+app/contest.db
+
+# OS / editor
+.DS_Store
+.idea/
+.vscode/
+*.swp
+tests/
+instructor/
+PLANNING.md
+PRD.md
+CLAUDE.md

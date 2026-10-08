@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+{% from "_icons.html" import icon %}
+{% block body %}
+<div class="fn">
+  <header class="fn-top">
+    <div class="fn-top__row">
+      <div class="fn-brand"><span class="fn-brand__mark">{{ (user.company|default('F'))[0]|upper }}</span>Fieldnote</div>
+      <div class="fn-user">
+        <span class="fn-plan">{{ user.plan|default('—') }}</span>
+        <div class="fn-user__meta">
+          <span class="fn-user__name">{{ user.full_name|default('Account') }}</span>
+          <span class="fn-user__co">{{ user.company|default('') }}</span>
+        </div>
+        <div class="fn-avatar">{{ (user.full_name|default('U'))[0]|upper }}</div>
+        <a class="fn-logout" href="{{ url_for('auth.logout') }}">Log out</a>
+      </div>
+    </div>
+    <nav class="fn-tabs">
+      <a href="{{ url_for('auth.dashboard') }}" class="{{ 'on' if active=='dashboard' }}">{{ icon('dashboard') }} Dashboard</a>
+      <a href="{{ url_for('auth.billing') }}" class="{{ 'on' if active=='billing' }}">{{ icon('billing') }} Billing</a>
+      <a href="{{ url_for('auth.team') }}" class="{{ 'on' if active=='team' }}">{{ icon('team') }} Team</a>
+      <a href="{{ url_for('auth.settings') }}" class="{{ 'on' if active=='settings' }}">{{ icon('settings') }} Settings</a>
+      <a href="{{ url_for('auth.support') }}" class="{{ 'on' if active=='support' }}">{{ icon('support') }} Support</a>
+      <a href="{{ url_for('auth.admin') }}" class="fn-tabs__admin {{ 'on' if active=='admin' }}">{{ icon('admin') }} Admin</a>
+    </nav>
+  </header>
+
+  {% with messages = get_flashed_messages(with_categories=true) %}
+    {% if messages %}
+      <div class="fn-flash-wrap">
+        {% for category, msg in messages %}
+          <div class="flash flash--{{ category }}">{{ msg }}</div>
+        {% endfor %}
+      </div>
+    {% endif %}
+  {% endwith %}
+
+  <main class="fn-main">
+    <h1 class="fn-heading">{% block heading %}{% endblock %}</h1>
+    {% block portal %}{% endblock %}
+  </main>
+</div>
+{% endblock %}

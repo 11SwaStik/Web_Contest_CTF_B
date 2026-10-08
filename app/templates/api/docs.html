@@ -1,0 +1,121 @@
+{% extends "base.html" %}
+{% block title %}Tidepool — API Reference{% endblock %}
+{% block body %}
+<div class="db">
+  <header class="db-nav">
+    <a class="db-logo" href="{{ url_for('api.landing') }}">🌊 Tidepool</a>
+    <nav>
+      <a href="{{ url_for('api.docs') }}" class="db-nav__on">Docs</a>
+      <a href="{{ url_for('api.docs') }}#reference">Reference</a>
+      <a href="{{ url_for('api.dashboard') }}">Dashboard</a>
+    </nav>
+  </header>
+
+  <div class="apidocs">
+    <main class="apidocs__main">
+      <h1 id="intro">API Reference</h1>
+      <p class="muted">The Tidepool API is organised around REST, uses resource-oriented
+         URLs, and returns JSON for every response. Base URL:</p>
+      <pre class="code">{{ request.url_root|trim('/') }}/api/v1</pre>
+
+      <section id="quickstart">
+        <h2>Quickstart</h2>
+        <p>Every request is authenticated with your API key and returns JSON. Fetch
+           your own station account to check your setup:</p>
+        <pre class="code">curl {{ request.url_root|trim('/') }}/api/v1/accounts/me \
+  -H "Authorization: Bearer {{ token }}"</pre>
+      </section>
+
+      <section id="auth">
+        <h2>Authentication</h2>
+        <p>Authenticate with a bearer token in the <code>Authorization</code>
+           header. Use your <strong>sandbox test key</strong> below while developing:</p>
+        <table class="kv">
+          <tr><th>Test API key</th><td><code>{{ token }}</code></td></tr>
+          <tr><th>Account id</th><td><code>{{ account_id }}</code></td></tr>
+        </table>
+        <p class="muted">Requests without a valid key return <code>401</code>.</p>
+      </section>
+
+      <section id="errors">
+        <h2>Errors</h2>
+        <p>Tidepool uses conventional HTTP status codes. Errors return a JSON body
+           with an <code>error</code> code and a human-readable <code>message</code>.</p>
+        <pre class="code">{
+  "error": "unauthorized",
+  "message": "Provide a valid 'Authorization: Bearer &lt;token&gt;' header."
+}</pre>
+        <table class="kv">
+          <tr><th><code>200</code></th><td>OK</td></tr>
+          <tr><th><code>401</code></th><td>Missing or invalid API key</td></tr>
+          <tr><th><code>404</code></th><td>Resource not found</td></tr>
+        </table>
+      </section>
+
+      <section id="reference">
+        <h2>API reference</h2>
+
+        <div id="me" class="endpoint">
+          <p><span class="method get">GET</span> <code>/v1/accounts/me</code></p>
+          <p>Returns the account associated with your key.</p>
+          <pre class="code">curl {{ request.url_root|trim('/') }}/api/v1/accounts/me \
+  -H "Authorization: Bearer {{ token }}"</pre>
+          <p class="muted">Returns <code>id</code>, <code>owner_name</code>,
+            <code>email</code>, <code>plan</code>, <code>private_note</code>.</p>
+        </div>
+
+        <div id="update" class="endpoint">
+          <p><span class="method patch">PATCH</span> <code>/v1/accounts/me</code></p>
+          <p>Updates your account profile. Send any subset of the editable fields
+             as a JSON body.</p>
+          <table class="kv">
+            <tr><th><code>owner_name</code></th><td>string — display name on the account.</td></tr>
+            <tr><th><code>email</code></th><td>string — contact email.</td></tr>
+          </table>
+          <pre class="code">curl -X PATCH {{ request.url_root|trim('/') }}/api/v1/accounts/me \
+  -H "Authorization: Bearer {{ token }}" \
+  -H "Content-Type: application/json" \
+  -d '{"owner_name": "New Name"}'</pre>
+          <p class="muted">Returns the updated account, same shape as <code>GET /v1/accounts/me</code>.</p>
+        </div>
+
+        <div id="usage" class="endpoint">
+          <p><span class="method get">GET</span> <code>/v1/usage</code></p>
+          <p>Returns request usage and limits for the current billing period.</p>
+          <pre class="code">curl {{ request.url_root|trim('/') }}/api/v1/usage \
+  -H "Authorization: Bearer {{ token }}"</pre>
+        </div>
+
+        <div id="events" class="endpoint">
+          <p><span class="method get">GET</span> <code>/v1/events</code></p>
+          <p>Lists recent events for your account (most recent first).</p>
+          <pre class="code">curl {{ request.url_root|trim('/') }}/api/v1/events \
+  -H "Authorization: Bearer {{ token }}"</pre>
+        </div>
+
+        <div id="health" class="endpoint">
+          <p><span class="method get">GET</span> <code>/v1/health</code></p>
+          <p>Returns API status. No authentication required.</p>
+          <pre class="code">curl {{ request.url_root|trim('/') }}/api/v1/health</pre>
+        </div>
+      </section>
+
+      <p class="apidocs__foot"><a href="{{ url_for('api.landing') }}">← Back to Tidepool</a></p>
+    </main>
+
+    <aside class="apidocs__toc">
+      <div class="apidocs__navlabel">On this page</div>
+      <a href="#intro">Introduction</a>
+      <a href="#quickstart">Quickstart</a>
+      <a href="#auth">Authentication</a>
+      <a href="#errors">Errors</a>
+      <div class="apidocs__navlabel">Reference</div>
+      <a href="#me" class="apidocs__sub">Current account</a>
+      <a href="#update" class="apidocs__sub">Update account</a>
+      <a href="#usage" class="apidocs__sub">Usage</a>
+      <a href="#events" class="apidocs__sub">Events</a>
+      <a href="#health" class="apidocs__sub">Health</a>
+    </aside>
+  </div>
+</div>
+{% endblock %}

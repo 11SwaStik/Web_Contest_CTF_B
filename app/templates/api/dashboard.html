@@ -1,0 +1,57 @@
+{% extends "base.html" %}
+{% block title %}Dashboard — Tidepool{% endblock %}
+{% block body %}
+<div class="db">
+  <header class="db-nav">
+    <a class="db-logo" href="{{ url_for('api.landing') }}">🌊 Tidepool</a>
+    <nav>
+      <a href="{{ url_for('api.docs') }}">Docs</a>
+      <a href="{{ url_for('api.docs') }}#reference">Reference</a>
+      <a class="db-nav__on" href="{{ url_for('api.dashboard') }}">Dashboard</a>
+    </nav>
+  </header>
+
+  <main class="db-dash">
+    <h1>Developer dashboard</h1>
+    <p class="db-dash__sub">Sandbox environment · {{ account.owner_name }}</p>
+
+    <div class="db-dash__grid">
+      <section class="db-panel">
+        <h2>Account</h2>
+        <dl class="db-kv">
+          <dt>Account ID</dt><dd>{{ account.id }}</dd>
+          <dt>Owner</dt><dd>{{ account.owner_name }}</dd>
+          <dt>Email</dt><dd>{{ account.email }}</dd>
+          <dt>Plan</dt><dd><span class="db-tag2">{{ account.plan }}</span></dd>
+        </dl>
+      </section>
+
+      <section class="db-panel">
+        <h2>API key</h2>
+        <p class="db-muted">Use this bearer token to authenticate sandbox requests.</p>
+        <code class="db-key">{{ token }}</code>
+        <p class="db-warn">⚠ Treat your key like a password. Do not share it.</p>
+      </section>
+    </div>
+
+    <section class="db-panel">
+      <div class="db-panel__head"><h2>Usage</h2><span class="db-muted">September</span></div>
+      <div class="db-bar"><div class="db-bar__fill" style="width: {{ pct }}%"></div></div>
+      <p class="db-muted">{{ "{:,}".format(used) }} of {{ "{:,}".format(limit) }} requests this month ({{ pct }}%).</p>
+    </section>
+
+    <section class="db-panel">
+      <div class="db-panel__head"><h2>Recent events</h2>
+        <a class="db-muted" href="{{ url_for('api.docs') }}#events">View API →</a></div>
+      <table class="db-events">
+        <thead><tr><th>Event</th><th>Type</th><th>Message</th><th>Time</th></tr></thead>
+        <tbody>
+          {% for e in events %}
+            <tr><td><code>{{ e.id }}</code></td><td><span class="db-tag2">{{ e.type }}</span></td><td>{{ e.message }}</td><td class="db-muted">{{ e.created }}</td></tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </section>
+  </main>
+</div>
+{% endblock %}

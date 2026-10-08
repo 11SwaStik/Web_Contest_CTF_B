@@ -1,0 +1,7 @@
+{% extends "shop/store_base.html" %}
+{% block title %}{{ title }} — Birchwood{% endblock %}
+{% block shop %}
+  <nav class="breadcrumb"><a href="{{ url_for('shop.index') }}">Home</a> / {{ title }}</nav>
+  <h1 class="page-title">{{ title }}</h1>
+  <div class="prose"><p>{{ body }}</p></div>
+{% endblock %}
